@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -7,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
 
-  private sudokuBoard: number[][];
-
+  public sudokuBoard: number[][];
+  
   constructor() {
     this.sudokuBoard = [
       [5,3,0,0,7,0,0,0,0],
@@ -26,38 +27,38 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  solve(): void {
-    this.solveSudoku(this.sudokuBoard);
-    console.log(this.sudokuBoard);
+  async solve() {
+    await this.solveSudoku(this.sudokuBoard);
   }
 
-  solveSudoku(board: number[][]): void {
+  async solveSudoku(board: number[][]) {
     const checker: Checker = new Checker(board);
 
-    if (!this.solveSudokuHelper(board, checker, 0, 0)) {
+    if (!(await this.solveSudokuHelper(board, checker, 0, 0))) {
       throw new Error("Unsolvable board");
     }
   }
 
-  solveSudokuHelper(board: number[][], checker: Checker, i: number, j: number): boolean {
+  async solveSudokuHelper(board: number[][], checker: Checker, i: number, j: number): Promise<boolean> {
+    
     
     if (i === 9) {
       return true;
     }
 
     if (board[i][j] !== 0) {
-      return this.solveSudokuHelper(board, checker, this.nextI(i, j), this.nextJ(i, j));
+      return (await this.solveSudokuHelper(board, checker, this.nextI(i, j), this.nextJ(i, j)));
     }
 
     for (var k: number = 1; k <= 9; k++) {
       if (checker.alreadyHasValue(k, i, j)) {
         continue;
       }
-      checker.placeInChecker(board, k, i, j);
-      if (this.solveSudokuHelper(board, checker, this.nextI(i,j), this.nextJ(i,j))) {
+      await checker.placeInChecker(board,k,i,j);
+      if (await this.solveSudokuHelper(board, checker, this.nextI(i,j), this.nextJ(i,j))) {
         return true;
       }
-      checker.remove(board, i, j);
+      await checker.remove(board, i, j);
     }
     return false;
   }
@@ -95,19 +96,21 @@ class Checker {
     return (this.isInRow[i][value] || this.isInCol[j][value] || this.isInBox[this.boxNumber(i, j)][value]);
   }
 
-  public placeInChecker(board: number[][], value: number, i: number, j: number): void {
+  public async placeInChecker(board: number[][], value: number, i: number, j: number) {
     this.isInRow[i][value] = true;
     this.isInCol[j][value] = true;
     this.isInBox[this.boxNumber(i, j)][value] = true;
     board[i][j] = value;
+    return await this.wait(0.25);
   }
 
-  public remove(board: number[][], i: number, j: number): void {
+  public async remove(board: number[][], i: number, j: number) {
     const value = board[i][j];
     this.isInBox[this.boxNumber(i, j)][value] = false;
     this.isInCol[j][value] = false;
     this.isInRow[i][value] = false;
     board[i][j] = 0;
+    return await this.wait(0.25);
   }
 
   private fillWithOriginalValues(board: number[][]) {
@@ -137,5 +140,9 @@ class Checker {
       array.push(innerArray);
     }
 
+  }
+
+  wait(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
