@@ -71,6 +71,29 @@ export class BoardComponent implements OnInit {
     return (j + 1) % 9;
   }
 
+  public needsTopBorder(rowIndex: number): boolean {
+    return (rowIndex <= 6 && rowIndex % 3 === 0)
+  }
+
+  public needsLeftBorder(colIndex: number): boolean {
+    return (colIndex <= 6 && colIndex % 3 === 0)
+  }
+
+  public isLeftEdge(colIndex: number): boolean {
+    return colIndex === 0;
+  }
+
+  public isTopEdge(rowIndex: number): boolean {
+    return rowIndex === 0;
+  }
+
+  public isRightEdge(colIndex: number): boolean {
+    return colIndex === 8;
+  }
+
+  public isBottomEdge(rowIndex: number): boolean {
+    return rowIndex === 8;
+  }
 }
 
 class Checker {
