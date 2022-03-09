@@ -1,0 +1,61 @@
+.board {
+    margin: 10% auto 10% auto;
+    width: 450px;
+    justify-content: center;
+}
+
+.header {
+    justify-content: center;
+}
+.solve-button {
+    display: flex;
+    margin: 50px auto 50px auto;
+    justify-content: center;
+}
+
+.matrix {
+    width: 450px;
+    padding: 0;
+}
+.cell {
+    /* margin: 10px; */
+    width: 50px;
+    height: 50px;
+    /* padding: 10px; */
+    text-align: center;
+    vertical-align: top;
+    display: inline-block;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.item {
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    /* border-top:1px solid; */
+}
+
+.border-top-cell {
+    border-top: 1px solid;
+}
+
+.border-left-cell {
+    border-left: 1px solid;
+}
+
+.left-edge-border {
+    border-left: 2px solid;
+}
+
+.right-edge-border {
+    border-right: 2px solid;
+}
+
+.top-edge-border {
+    border-top: 2px solid;
+}
+
+.bottom-edge-border {
+    border-bottom: 2px solid;
+}
