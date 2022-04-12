@@ -10,3 +10,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+## View Deployed Webpage
+
+This app has been deployed on github pages at https://rochakpokharel.github.io/sudoku-solver/
+Visit this link to try out the sudoku solver!
+
