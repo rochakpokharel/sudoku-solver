@@ -12,6 +12,6 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## View Deployed Webpage
 
-This app has been deployed on github pages at https://rochakpokharel.github.io/sudoku-solver/
+This app has been deployed on github pages at `https://rochakpokharel.github.io/sudoku-solver/`
 Visit this link to try out the sudoku solver!
 
